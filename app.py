@@ -1,95 +1,37 @@
-from flask import Flask, jsonify, request
+
+from flask import Flask, jsonify, request, render_template
 
 app = Flask(__name__)
 
 
-# ==========================================
-# PART D: HOME ENDPOINT
-# ==========================================
+# 1. Home page
 @app.route('/')
 def home():
-    return "Welcome to my first API!"
+    return render_template('index.html')
 
 
-# ==========================================
-# PART G: STUDENT ENDPOINT
-# ==========================================
+# 2. Student Details API
 @app.route('/student')
 def get_student():
     return jsonify({
         "student_id": "24-00290",
-        "name": "April Joy Cartagena",
+        "name": "APRIL JOY CARTAGENA",
         "program": "BSIT",
         "year": 3,
-        "section": "Hamilton"
+        "section": "HAMILTON",
+        "hobbies": "reading"
     })
 
 
-# ==========================================
-# PART F: HELLO ENDPOINT
-# ==========================================
+# 3. Greeting API
 @app.route('/hello')
 def say_hello():
-    name = request.args.get('name', 'Student')
+    name = request.args.get('name', 'Student').strip() or 'Student'
 
     return jsonify({
         "message": f"Hello, {name}!"
     })
 
 
-# ==========================================
-# PART H: COURSE ENDPOINT
-# ==========================================
-@app.route('/course')
-def get_course():
-    return jsonify({
-        "course_code": "IT 3120",
-        "course_title": "Information Technology Laboratory",
-        "instructor": "YOUR INSTRUCTOR",
-        "semester": "First Semester",
-        "academic_year": "2026-2027"
-    })
-
-
-# ==========================================
-# PART I: PERSONALIZED GREETING ENDPOINT
-# ==========================================
-@app.route('/greet')
-def greet():
-    name = request.args.get('name', 'Student')
-    section = request.args.get('section', 'BSIT')
-
-    return jsonify({
-        "message": f"Hello {name} from {section}!"
-    })
-
-
-# ==========================================
-# PART K: PROFILE ENDPOINT
-# ==========================================
-@app.route('/profile')
-def get_profile():
-    return jsonify({
-        "student_id": "24-00290",
-        "name": "April Joy Cartagena",
-        "program": "BSIT",
-        "year": 3,
-        "section": "Hamilton",
-        "email": "cartagenaapriljoy1@gmail.com",
-        "skills": [
-            "Python",
-            "HTML",
-            "Networking"
-        ]
-    })
-
-
-# ==========================================
-# PART E AND PART J: RUN THE API
-# ==========================================
 if __name__ == '__main__':
-    app.run(
-        host="0.0.0.0",
-        port=5000,
-        debug=True
-    )
+    app.run(host='0.0.0.0', port=5000, debug=True)
